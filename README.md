@@ -1,5 +1,5 @@
 ### Kotlin Compose app
 
-color palette:
+enum palette:
 
-    https://htmlcolorcodes.com/color-chart/material-design-color-chart/
+    https://htmlcolorcodes.com/enum-chart/material-design-enum-chart/

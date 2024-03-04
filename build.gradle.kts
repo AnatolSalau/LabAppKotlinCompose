@@ -46,6 +46,9 @@ compose.desktop {
             linux {
                 iconFile.set(project.file("src/main/resources/erythrocytes.ico"))
             }
+            jvmArgs(
+                "-Dapple.awt.application.appearance=system"
+            )
         }
     }
 }
