@@ -1,4 +1,4 @@
-package component.chart.zoom
+package component.zoom
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Canvas
@@ -21,7 +21,7 @@ fun ZoomBorder(
     zoomWidth: Float, zoomHeight: Float,
 ) {
     Canvas(
-        modifier = Modifier.zIndex(1f)
+        modifier = Modifier.zIndex(10f)
     ) {
         drawRoundRect(
             color = color,

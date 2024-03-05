@@ -7,8 +7,6 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -16,8 +14,9 @@ import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import component.zoom.ZoomBorder
+import component.zoom.Point
 import enum.ColorEnum
 import enum.DragTypeEnum
 import kotlinx.coroutines.flow.collect
@@ -26,7 +25,6 @@ import kotlin.math.abs
 import kotlin.math.absoluteValue
 
 const val MIN_ZOOM_SIZE: Float = 20f
-const val LEFT_MENU_WIDTH: Float = 300f
 
 @Composable
 @Preview
@@ -193,18 +191,24 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             zoomWidth = zoomWidth, zoomHeight = zoomHeight,
             zoomColor = zoomColor
         )
-        Row {
+        Box {
             LeftMenuField(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .width(LEFT_MENU_WIDTH.dp)
                     .background(color = ColorEnum.LIGHT_BLUE.color)
+                    .zIndex(1f)
             )
             ChartMainField(
-                modifier = Modifier.fillMaxSize().background(ColorEnum.WHITE.color),
-                xZoom = xZoom - (LEFT_MENU_WIDTH + (LEFT_MENU_WIDTH/2) ), yZoom = yZoom,
-                zoomWidth = zoomWidth, zoomHeight = zoomHeight
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(ColorEnum.WHITE.color),
+                xZoom = xZoom, yZoom = yZoom,
+                zoomWidth = zoomWidth, zoomHeight = zoomHeight,
             )
+            ZoomBorder(zoomWidth = zoomWidth, zoomHeight = zoomHeight, xZoom = xZoom, yZoom = yZoom)
+
+            Point( x = xTap, y = yTap, color = ColorEnum.RED) // tap point
+            Point( x = xDragStart, y = yDragStart, color = ColorEnum.RED) // drag start point
         }
     }
 }
