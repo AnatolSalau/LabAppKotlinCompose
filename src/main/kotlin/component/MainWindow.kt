@@ -73,13 +73,14 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             xDragEnd = xDragEnd, yDragEnd = yDragEnd,
             dragType = DragTypeEnum.ON_DRAG,
             xZoom = xZoom, yZoom = yZoom,
-            zoomWidth = zoomWidth, zoomHeight = zoomWidth,
+            zoomWidth = zoomWidth, zoomHeight = zoomHeight,
             zoomColor = ColorEnum.LIGHT_BLUE
         )
 
         ChartMainField(modifier = Modifier.fillMaxSize().background(ColorEnum.WHITE.color))
 
+        /*
 
+         */
     }
-
 }
