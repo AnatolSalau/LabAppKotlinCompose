@@ -26,6 +26,7 @@ import kotlin.math.abs
 import kotlin.math.absoluteValue
 
 const val MIN_ZOOM_SIZE: Float = 20f
+const val LEFT_MENU_WIDTH: Float = 300f
 
 @Composable
 @Preview
@@ -34,7 +35,6 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
     val coroutineScope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
 
-    var text by remember { mutableStateOf("Hello, World!") }
 
     var xTap by remember { mutableStateOf(0f) }
     var yTap by remember { mutableStateOf(0f) }
@@ -47,8 +47,8 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
     var yZoom by remember { mutableStateOf(0f) }
     var zoomWidth by remember { mutableStateOf(0f) }
     var zoomHeight by remember { mutableStateOf(0f) }
-
     var dragType by remember { mutableStateOf(DragTypeEnum.ON_DRAG_CANCEL) }
+    var zoomColor by remember { mutableStateOf(ColorEnum.BLUE_GREEN) }
 
 
     LaunchedEffect(interactionSource) {
@@ -191,11 +191,20 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             dragType = dragType,
             xZoom = xZoom, yZoom = yZoom,
             zoomWidth = zoomWidth, zoomHeight = zoomHeight,
-            zoomColor = ColorEnum.LIGHT_BLUE
+            zoomColor = zoomColor
         )
         Row {
-            LeftMenuField()
-            ChartMainField(modifier = Modifier.fillMaxSize().background(ColorEnum.WHITE.color))
+            LeftMenuField(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(LEFT_MENU_WIDTH.dp)
+                    .background(color = ColorEnum.LIGHT_BLUE.color)
+            )
+            ChartMainField(
+                modifier = Modifier.fillMaxSize().background(ColorEnum.WHITE.color),
+                xZoom = xZoom - (LEFT_MENU_WIDTH + (LEFT_MENU_WIDTH/2) ), yZoom = yZoom,
+                zoomWidth = zoomWidth, zoomHeight = zoomHeight
+            )
         }
     }
 }
