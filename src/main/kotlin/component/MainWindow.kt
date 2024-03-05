@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.zIndex
 import component.zoom.ZoomBorder
 import component.zoom.Point
+import component.zoom.ZoomButton
 import enum.ColorEnum
 import enum.DragTypeEnum
 import kotlinx.coroutines.flow.collect
@@ -207,8 +208,14 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             )
             ZoomBorder(zoomWidth = zoomWidth, zoomHeight = zoomHeight, xZoom = xZoom, yZoom = yZoom)
 
-            Point( x = xTap, y = yTap, color = ColorEnum.RED) // tap point
-            Point( x = xDragStart, y = yDragStart, color = ColorEnum.RED) // drag start point
+            Point(x = xTap, y = yTap, color = ColorEnum.RED) // tap point
+            Point(x = xDragStart, y = yDragStart, color = ColorEnum.RED) // drag start point
+            ZoomButton(
+                xDragEnd = xDragEnd, yDragEnd = yDragEnd,
+                yDragStart = yDragStart, zoomWidth = zoomWidth,
+                zoomHeight = zoomHeight, minZoomSize = MIN_ZOOM_SIZE,
+                dragType = dragType
+            )
         }
     }
 }
