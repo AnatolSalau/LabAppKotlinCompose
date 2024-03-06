@@ -49,6 +49,9 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
     var dragType by remember { mutableStateOf(DragTypeEnum.ON_DRAG_CANCEL) }
     var zoomColor by remember { mutableStateOf(ColorEnum.BLUE_GREEN) }
 
+    /*
+
+     */
 
     LaunchedEffect(interactionSource) {
         interactionSource.interactions.collect { interaction ->
