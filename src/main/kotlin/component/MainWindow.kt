@@ -12,8 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onGloballyPositioned
 
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import component.zoom.ZoomBorder
 import component.zoom.Point
@@ -26,6 +28,7 @@ import kotlin.math.abs
 import kotlin.math.absoluteValue
 
 const val MIN_ZOOM_SIZE: Float = 20f
+const val CHART_LEFT_OFFSET = 200f
 
 @Composable
 @Preview
@@ -33,7 +36,6 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
 
     val coroutineScope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
-
 
     var xTap by remember { mutableStateOf(0f) }
     var yTap by remember { mutableStateOf(0f) }
@@ -48,10 +50,6 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
     var zoomHeight by remember { mutableStateOf(0f) }
     var dragType by remember { mutableStateOf(DragTypeEnum.ON_DRAG_CANCEL) }
     var zoomColor by remember { mutableStateOf(ColorEnum.BLUE_GREEN) }
-
-    /*
-
-     */
 
     LaunchedEffect(interactionSource) {
         interactionSource.interactions.collect { interaction ->
@@ -138,7 +136,6 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
 
                                 if (abs(dragCoordinate.absoluteValue - tapCoordinate.absoluteValue) <= MIN_ZOOM_SIZE) return 0f
 
-
                                 return size
                             }
 
@@ -152,7 +149,6 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                                 zoomWidth = width
                                 zoomHeight = height
                             }
-
                         }
                     },
                     onDragCancel = {
@@ -195,19 +191,24 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             zoomWidth = zoomWidth, zoomHeight = zoomHeight,
             zoomColor = zoomColor
         )
+
         Box {
             LeftMenuField(
                 modifier = Modifier
                     .fillMaxHeight()
+                    .width(CHART_LEFT_OFFSET.dp)
                     .background(color = ColorEnum.LIGHT_BLUE.color)
                     .zIndex(1f)
             )
+
+
             ChartMainField(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(ColorEnum.WHITE.color),
+                    .background(ColorEnum.PASTEL_BLUE.color),
                 xZoom = xZoom, yZoom = yZoom,
                 zoomWidth = zoomWidth, zoomHeight = zoomHeight,
+                leftOffset = CHART_LEFT_OFFSET
             )
             ZoomBorder(zoomWidth = zoomWidth, zoomHeight = zoomHeight, xZoom = xZoom, yZoom = yZoom)
 
@@ -222,3 +223,6 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
         }
     }
 }
+/*
+
+ */
