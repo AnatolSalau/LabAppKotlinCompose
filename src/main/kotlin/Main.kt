@@ -24,7 +24,7 @@ fun App() {
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        state = WindowState(width = 800.dp, height = 600.dp),
+        state = WindowState(width = 800.dp, height = 1000.dp),
         title = "Lab application",
         icon = painterResource("erythrocytes.png")
     ) {
