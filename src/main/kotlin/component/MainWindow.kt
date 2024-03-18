@@ -14,7 +14,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onGloballyPositioned
 
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -39,7 +38,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
     val coroutineScope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
 
-    val defaultData: Map<Int, Pair<Double, Double>> = remember {
+    val defaultData: MutableMap<Int, Pair<Double, Double>> = remember {
         mutableStateMapOf(
             1 to Pair(1.0, 2.0),
             2 to Pair(3.0, 4.0),
@@ -62,7 +61,9 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             19 to Pair(37.0, 38.0),
         )
     }
+    /*
 
+     */
 
     var xTap by remember { mutableStateOf(0f) }
     var yTap by remember { mutableStateOf(0f) }
@@ -241,8 +242,10 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
 
                 xZoom = xZoom, yZoom = yZoom,
                 zoomWidth = zoomWidth, zoomHeight = zoomHeight,
+                measurementData = defaultData
             )
-            ZoomBorder(zoomWidth = zoomWidth, zoomHeight = zoomHeight, xZoom = xZoom, yZoom = yZoom)
+            ZoomBorder(zoomWidth = zoomWidth, zoomHeight = zoomHeight, xZoom = xZoom, yZoom =
+            yZoom)
 
             Point(x = xTap, y = yTap, color = ColorEnum.RED) // tap point
             Point(x = xDragStart, y = yDragStart, color = ColorEnum.RED) // drag start point

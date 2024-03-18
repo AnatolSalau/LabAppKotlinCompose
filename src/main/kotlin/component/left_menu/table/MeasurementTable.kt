@@ -18,9 +18,12 @@ import enum.ColorEnum
 @Preview
 fun LeftMenuTable(
     modifier: Modifier = Modifier.fillMaxWidth(),
-    measurementData: Map<Int, Pair<Double, Double>>
+    measurementData: MutableMap<Int, Pair<Double, Double>>
 ) {
+
     Column(modifier = modifier) {
-        TableRow()
+        measurementData.forEach { (key, value) ->
+            TableRow( id = key, x = value.first , y = value.second, measurementData = measurementData)
+        }
     }
 }

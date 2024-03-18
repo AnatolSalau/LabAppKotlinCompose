@@ -8,11 +8,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import component.zoom.ZoomBorder
 import enum.ColorEnum
 
 
@@ -20,9 +17,9 @@ import enum.ColorEnum
 @Preview
 fun ChartMainField(
     modifier: Modifier = Modifier.background(ColorEnum.WHITE.color),
-    zoomWidth: Float, zoomHeight: Float, xZoom: Float, yZoom: Float
+    zoomWidth: Float, zoomHeight: Float, xZoom: Float, yZoom: Float,
+    measurementData: Map<Int, Pair<Double, Double>>
 ) {
-    val localDensity = LocalDensity.current
     Box(modifier = modifier
         .width(200.dp)
         .border(width = 3.dp, color = Color.Red),
