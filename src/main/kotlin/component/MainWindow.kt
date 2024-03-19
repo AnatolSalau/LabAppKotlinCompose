@@ -31,14 +31,17 @@ import kotlin.math.absoluteValue
 const val MIN_ZOOM_SIZE: Float = 20f
 const val CHART_LEFT_OFFSET = 200f
 
+
+
 @Composable
 @Preview
 fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.WHITE.color)) {
 
     val coroutineScope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
+    var CHANGE_COUNT by remember { mutableStateOf(0) }
 
-    val defaultData: MutableMap<Int, Pair<Double, Double>> = remember {
+    val measurementData: MutableMap<Int, Pair<Double, Double>> = remember {
         mutableStateMapOf(
             1 to Pair(1.0, 2.0),
             2 to Pair(3.0, 4.0),
@@ -217,7 +220,8 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             dragType = dragType,
             xZoom = xZoom, yZoom = yZoom,
             zoomWidth = zoomWidth, zoomHeight = zoomHeight,
-            zoomColor = zoomColor
+            zoomColor = zoomColor,
+            measurementData = measurementData
         )
 
         Box {
@@ -227,7 +231,8 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                     .width(CHART_LEFT_OFFSET.dp)
                     .background(color = ColorEnum.LIGHT_BLUE.color)
                     .zIndex(1f),
-                measurementData = defaultData
+                measurementData = measurementData,
+                changeCount = CHANGE_COUNT
             )
 
             /*
@@ -242,7 +247,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
 
                 xZoom = xZoom, yZoom = yZoom,
                 zoomWidth = zoomWidth, zoomHeight = zoomHeight,
-                measurementData = defaultData
+                measurementData = measurementData
             )
             ZoomBorder(zoomWidth = zoomWidth, zoomHeight = zoomHeight, xZoom = xZoom, yZoom =
             yZoom)

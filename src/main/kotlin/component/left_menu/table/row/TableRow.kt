@@ -22,7 +22,9 @@ import component.left_menu.table.row.TableCell
  */
 @Composable
 fun TableRow(
-    id: Int, x: Double, y: Double, measurementData: MutableMap<Int, Pair<Double, Double>>
+    id: Int, x: Double, y: Double,
+    measurementData: MutableMap<Int, Pair<Double, Double>>,
+    changeCount: Int
 ) {
     Row(
         horizontalArrangement = Arrangement
@@ -44,6 +46,6 @@ fun TableRow(
         )
         TableCell(value = x)
         TableCell(value = y)
-        RowButton()
+        RowButton( id = id, x = x, y = y, measurementData = measurementData, changeCount = changeCount )
     }
 }

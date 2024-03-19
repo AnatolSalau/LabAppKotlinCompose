@@ -15,7 +15,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 @Preview
-fun RowButton() {
+fun RowButton(
+    id: Int, x: Double, y: Double,
+    measurementData: MutableMap<Int, Pair<Double, Double>>,
+    changeCount: Int
+) {
         var text by remember { mutableStateOf("+") }
     Box (
         modifier = Modifier.fillMaxHeight(),
@@ -25,6 +29,8 @@ fun RowButton() {
         Button(
             onClick = {
                 text = "-"
+                measurementData[id] = Pair( -99.0, -99.0)
+                changeCount = changeCount + 1;
             },
             contentPadding = PaddingValues(0.dp),
             modifier = Modifier
