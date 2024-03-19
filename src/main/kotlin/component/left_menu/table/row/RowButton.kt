@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 fun RowButton(
     id: Int, x: Double, y: Double,
     measurementData: MutableMap<Int, Pair<Double, Double>>,
-    changeCount: Int
+    updateIndex: Unit
 ) {
         var text by remember { mutableStateOf("+") }
     Box (
@@ -29,8 +29,10 @@ fun RowButton(
         Button(
             onClick = {
                 text = "-"
+                measurementData.remove(id)
                 measurementData[id] = Pair( -99.0, -99.0)
-                changeCount = changeCount + 1;
+
+                updateIndex;
             },
             contentPadding = PaddingValues(0.dp),
             modifier = Modifier

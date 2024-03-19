@@ -15,14 +15,14 @@ import enum.ColorEnum
 fun LeftMenuField(
     modifier: Modifier = Modifier.background(ColorEnum.LIGHT_BLUE.color).fillMaxHeight(),
     measurementData:MutableMap<Int, Pair<Double, Double>>,
-    changeCount: Int
+    updateIndex: Unit
 ) {
 
     Column(modifier = modifier) {
         Text(text = "LeftMenuField")
         LeftMenuTable(
             measurementData = measurementData,
-            changeCount = changeCount
+            updateIndex = updateIndex
         )
     }
 }

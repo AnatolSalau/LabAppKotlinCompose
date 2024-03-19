@@ -24,7 +24,7 @@ import component.left_menu.table.row.TableCell
 fun TableRow(
     id: Int, x: Double, y: Double,
     measurementData: MutableMap<Int, Pair<Double, Double>>,
-    changeCount: Int
+    updateIndex: Unit
 ) {
     Row(
         horizontalArrangement = Arrangement
@@ -46,6 +46,6 @@ fun TableRow(
         )
         TableCell(value = x)
         TableCell(value = y)
-        RowButton( id = id, x = x, y = y, measurementData = measurementData, changeCount = changeCount )
+        RowButton( id = id, x = x, y = y, measurementData = measurementData, updateIndex = updateIndex )
     }
 }

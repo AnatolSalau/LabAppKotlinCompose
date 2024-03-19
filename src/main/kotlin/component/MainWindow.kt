@@ -39,8 +39,12 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
 
     val coroutineScope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
-    var CHANGE_COUNT by remember { mutableStateOf(0) }
+    
+    var index by remember { mutableStateOf(0) }
 
+    fun updateIndex(){
+        //index +=1;
+    }
     val measurementData: MutableMap<Int, Pair<Double, Double>> = remember {
         mutableStateMapOf(
             1 to Pair(1.0, 2.0),
@@ -221,6 +225,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             xZoom = xZoom, yZoom = yZoom,
             zoomWidth = zoomWidth, zoomHeight = zoomHeight,
             zoomColor = zoomColor,
+            index = index,
             measurementData = measurementData
         )
 
@@ -232,7 +237,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                     .background(color = ColorEnum.LIGHT_BLUE.color)
                     .zIndex(1f),
                 measurementData = measurementData,
-                changeCount = CHANGE_COUNT
+                updateIndex = updateIndex()
             )
 
             /*

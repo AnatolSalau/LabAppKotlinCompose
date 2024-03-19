@@ -22,8 +22,8 @@ fun StatisticField(
     xZoom: Float, yZoom: Float,
     zoomWidth: Float, zoomHeight: Float,
     zoomColor: ColorEnum,
+    index: Int,
     measurementData: MutableMap<Int, Pair<Double, Double>>
-
 ) {
     Row(modifier = modifier) {
         Column {
@@ -53,6 +53,8 @@ fun StatisticField(
             Text("Zoom color : ${zoomColor.txtName}")
         }
         Column {
+            Text(text = "UpdateIndex : $index")
+            Spacer(Modifier.height(10.dp))
             measurementData.forEach { (key, value) ->
                 run {
                     Text(text = " ${key} : ( ${value.first} ,${value.second} ")
