@@ -21,7 +21,7 @@ fun TableCell(
     modifier: Modifier = Modifier
         .width(50.dp)
         .fillMaxHeight()
-        .border(width = 2.dp, color = Color.Black)
+        //.border(width = 2.dp, color = Color.Black)
     ,
     value: Double
 ) {

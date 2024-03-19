@@ -25,11 +25,14 @@ fun TableRow(
     id: Int, x: Double, y: Double, measurementData: MutableMap<Int, Pair<Double, Double>>
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        horizontalArrangement = Arrangement
+            .spacedBy(2.dp)
+
+        ,
         modifier = Modifier
             .padding(start = 2.dp)
             .height(30.dp)
-            //.border(width = 2.dp, color = Color.Black)
+            .border(width = 1.dp, color = Color.Black)
     ) {
         Text(modifier = Modifier
             .width(25.dp)
