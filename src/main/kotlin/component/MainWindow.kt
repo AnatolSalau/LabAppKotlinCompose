@@ -231,7 +231,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             )
 
             /*
-
+                ac
              */
             ChartMainField(
                 modifier = Modifier

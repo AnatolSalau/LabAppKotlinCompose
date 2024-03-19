@@ -17,7 +17,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import component.left_menu.table.row.RowButton
 import component.left_menu.table.row.TableCell
+/*
 
+ */
 @Composable
 fun TableRow(
     id: Int, x: Double, y: Double, measurementData: MutableMap<Int, Pair<Double, Double>>
