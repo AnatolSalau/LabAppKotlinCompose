@@ -45,6 +45,8 @@ fun TableCell(
             textStyle = TextStyle(textAlign = TextAlign.Center),
             onValueChange = { newText: String ->
                 oldValue.value = newText
+                if (isX) measurementData[id] = Pair(newText.toDouble(), 0.0)
+                else measurementData[id]?.second.toString()
             }
         )
 
