@@ -13,10 +13,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/*
+
+ */
 @Composable
 @Preview
 fun RowButton(
-    id: Int, x: Double, y: Double,
+    id: Int,
     measurementData: MutableMap<Int, Pair<Double, Double>>,
     updateIndex: Unit
 ) {

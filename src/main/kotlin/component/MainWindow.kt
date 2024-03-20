@@ -45,7 +45,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
     fun updateIndex(){
         //index +=1;
     }
-    val measurementData: MutableMap<Int, Pair<Double, Double>> = remember {
+    val measurementData = remember {
         mutableStateMapOf(
             1 to Pair(1.0, 2.0),
             2 to Pair(3.0, 4.0),

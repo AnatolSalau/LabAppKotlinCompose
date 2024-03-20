@@ -23,7 +23,7 @@ fun LeftMenuTable(
 ) {
     Column(modifier = modifier) {
         measurementData.forEach { (key, value) ->
-            TableRow( id = key, x = value.first , y = value.second, measurementData = measurementData, updateIndex = updateIndex)
+            TableRow( id = key, measurementData = measurementData, updateIndex = updateIndex)
         }
     }
 }

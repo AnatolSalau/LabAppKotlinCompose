@@ -57,7 +57,7 @@ fun StatisticField(
             Spacer(Modifier.height(10.dp))
             measurementData.forEach { (key, value) ->
                 run {
-                    Text(text = " ${key} : ( ${value.first} ,${value.second} ")
+                    Text(text = " ${key} : ( ${value.first} ,${value.second} )")
                 }
             }
         }
