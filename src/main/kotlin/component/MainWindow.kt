@@ -261,7 +261,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                 modifier = Modifier
                     .fillMaxSize()
                     .background(ColorEnum.PASTEL_BLUE.color)
-                    .border(width = 1.dp, color = Color.Green)
+                    .border(width = 2.dp, color = Color.Transparent)
                     .padding(start = CHART_LEFT_OFFSET.dp),
 
                 xZoom = xZoom, yZoom = yZoom,
