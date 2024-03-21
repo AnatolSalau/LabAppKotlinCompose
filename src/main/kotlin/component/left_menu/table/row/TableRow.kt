@@ -18,12 +18,11 @@ import component.left_menu.table.row.TableCell
 fun TableRow(
     id: Int,
     measurementData: MutableMap<Int, Pair<Double, Double>>,
-    updateIndex: Unit
+    newMeasurementData: MutableMap<Int, Pair<Double, Double>>,
 ) {
     Row(
         horizontalArrangement = Arrangement
             .spacedBy(2.dp)
-
         ,
         modifier = Modifier
             .padding(start = 2.dp)
@@ -39,8 +38,8 @@ fun TableRow(
             , text = "${id.toString()})"
             , textAlign = TextAlign.Center
         )
-        TableCell(id = id, measurementData = measurementData, isX = true)
-        TableCell(id = id, measurementData = measurementData, isX = false)
-        RowButton( id = id, measurementData = measurementData, updateIndex = updateIndex )
+        TableCell(id = id, measurementData = measurementData, newMeasurementData = newMeasurementData, isX = true)
+        TableCell(id = id, measurementData = measurementData, newMeasurementData = newMeasurementData, isX = false)
+        RowButton( id = id, measurementData = measurementData, newMeasurementData = newMeasurementData )
     }
 }

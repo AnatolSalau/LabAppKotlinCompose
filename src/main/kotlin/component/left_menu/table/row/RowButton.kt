@@ -21,21 +21,29 @@ import androidx.compose.ui.unit.sp
 fun RowButton(
     id: Int,
     measurementData: MutableMap<Int, Pair<Double, Double>>,
-    updateIndex: Unit
+    newMeasurementData: MutableMap<Int, Pair<Double, Double>>
 ) {
-        var text by remember { mutableStateOf("+") }
-    Box (
-        modifier = Modifier.fillMaxHeight(),
-            //.border(width = 1.dp, color = Color.Red),
-        contentAlignment = Alignment.Center
-            ) {
-        Button(
-            onClick = {
-                text = "-"
-                measurementData.remove(id)
-                measurementData[id] = Pair( -99.0, -99.0)
+    var text by remember { mutableStateOf("+") }
 
-                updateIndex;
+    val firstOld = measurementData[id]?.first
+    val firstNew = newMeasurementData[id]?.first
+
+    val secondOld = measurementData[id]?.second
+    val secondNew = newMeasurementData[id]?.second
+
+    Box(
+        modifier = Modifier.fillMaxHeight(),
+        //.border(width = 1.dp, color = Color.Red),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(
+            enabled = if (firstOld == firstNew && secondOld == secondNew) false else true,
+            onClick = {
+                text = "+"
+                val xy = newMeasurementData[id]
+                if (xy != null && xy.first != null && xy.second != null) {
+                    measurementData[id] = xy
+                }
             },
             contentPadding = PaddingValues(0.dp),
             modifier = Modifier
@@ -48,8 +56,7 @@ fun RowButton(
                 modifier = Modifier
                     .fillMaxSize()
                     //.border(width = 1.dp, color = Color.Green)
-                    .wrapContentHeight(align = Alignment.CenterVertically)
-                ,
+                    .wrapContentHeight(align = Alignment.CenterVertically),
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center
             )

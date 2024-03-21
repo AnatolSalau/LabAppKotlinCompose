@@ -39,13 +39,8 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
 
     val coroutineScope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
-    
-    var index by remember { mutableStateOf(0) }
 
-    fun updateIndex(){
-        //index +=1;
-    }
-    val measurementData = remember {
+    val measurementData: MutableMap<Int, Pair<Double, Double>> = remember {
         mutableStateMapOf(
             1 to Pair(1.0, 2.0),
             2 to Pair(3.0, 4.0),
@@ -68,10 +63,29 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             19 to Pair(37.0, 38.0),
         )
     }
-    /*
-
-     */
-
+    val newMeasurementData: MutableMap<Int, Pair<Double, Double>> = remember {
+        mutableStateMapOf(
+            1 to Pair(1.0, 2.0),
+            2 to Pair(3.0, 4.0),
+            3 to Pair(5.0, 6.0),
+            4 to Pair(7.0, 8.0),
+            5 to Pair(9.0, 10.0),
+            6 to Pair(11.0, 12.0),
+            7 to Pair(13.0, 14.0),
+            8 to Pair(15.0, 16.0),
+            9 to Pair(17.0, 18.0),
+            10 to Pair(19.0, 20.0),
+            11 to Pair(21.0, 22.0),
+            12 to Pair(23.0, 24.0),
+            13 to Pair(25.0, 26.0),
+            14 to Pair(27.0, 28.0),
+            15 to Pair(29.0, 30.0),
+            16 to Pair(31.0, 32.0),
+            17 to Pair(33.0, 34.0),
+            18 to Pair(35.0, 36.0),
+            19 to Pair(37.0, 38.0),
+        )
+    }
     var xTap by remember { mutableStateOf(0f) }
     var yTap by remember { mutableStateOf(0f) }
     var xDragStart by remember { mutableStateOf(0f) }
@@ -225,8 +239,8 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             xZoom = xZoom, yZoom = yZoom,
             zoomWidth = zoomWidth, zoomHeight = zoomHeight,
             zoomColor = zoomColor,
-            index = index,
-            measurementData = measurementData
+            measurementData = measurementData,
+            newMeasurementData = newMeasurementData
         )
 
         Box {
@@ -237,7 +251,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                     .background(color = ColorEnum.LIGHT_BLUE.color)
                     .zIndex(1f),
                 measurementData = measurementData,
-                updateIndex = updateIndex()
+                newMeasurementData = newMeasurementData,
             )
 
             /*
