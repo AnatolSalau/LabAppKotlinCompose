@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -32,6 +33,7 @@ val valuesLineChart = mutableListOf(
     Point(3.5f, 3.2f),
     Point(4f, 0.8f),
 )
+var pixelPointsLineChart: List<PixelPont>? = mutableStateListOf()
 
 @Composable
 @Preview
@@ -41,7 +43,7 @@ fun ChartMainField(
     measurementData: Map<Int, Pair<Double, Double>>
 ) {
 
-    var pixelPointsLineChart: MutableList<PixelPont>? = mutableListOf()
+
 
     pixelPointsLineChart?.forEachIndexed { index, point ->
         //draw points
@@ -69,7 +71,7 @@ fun ChartMainField(
             Text(text = "Top")
             pixelPointsLineChart?.forEachIndexed { index, point ->
                 //draw points
-                Text(text = "${point.pixelX}")
+                Text(text = "{PixelX : ${point.pixelX}, PixelY : ${point.pixelY}}")
                 drawPoint(point.pixelX, point.pixelY)
             }
         }
@@ -95,7 +97,7 @@ fun ChartMainField(
             ) {
                 Text(text = "Main chart")
                 if (pixelPointsLineChart != null) {
-                    drawLineChart(valuesLineChart = valuesLineChart, pixelPointsLineChart = pixelPointsLineChart )
+                    drawLineChart(valuesLineChart = valuesLineChart)
                 }
             }
 
@@ -132,7 +134,6 @@ fun drawLineChart(
         .fillMaxSize()
         .border(width = 2.dp, color = Color.Red),
     valuesLineChart: MutableList<Point>,
-    pixelPointsLineChart: MutableList<PixelPont>
 
 ) {
     // find max and min value of X, we will need that later
@@ -148,7 +149,7 @@ fun drawLineChart(
         { // we use drawBehind() method to create canvas
 
             // map data points to pixel values, in canvas we think in pixels
-            valuesLineChart.map {
+            pixelPointsLineChart = valuesLineChart.map {
                 // we use extension function to convert and scale initial values to pixels
                 val pixelX = it.x.mapValueToDifferentRange(
                     inMin = minXValue,
@@ -156,7 +157,7 @@ fun drawLineChart(
                     outMin = 0f,
                     outMax = size.width
                 )
-
+                it.x
                 // same with y axis
                 val pixelY = it.y.mapValueToDifferentRange(
                     inMin = minYValue,
@@ -164,8 +165,7 @@ fun drawLineChart(
                     outMin = size.height,
                     outMax = 0f
                 )
-
-                pixelPointsLineChart.add(PixelPont(valueX = it.x, valueY = it.y, pixelX = pixelX, pixelY = pixelY))
+                PixelPont(valueX = it.x, valueY = it.y, pixelX = pixelX, pixelY = pixelY)
             }
             val path = Path() // prepare path to draw
 
@@ -183,7 +183,6 @@ fun drawLineChart(
                     radius = 10f,
                     center = Offset(point.pixelX, point.pixelY)
                 )
-                //drawPoint(point.pixelX, point.pixelY, Offset(x = point.pixelX, y = point.pixelY))
             }
             // and finally we draw the path
             drawPath(
