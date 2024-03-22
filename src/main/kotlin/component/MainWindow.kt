@@ -248,8 +248,8 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(CHART_LEFT_OFFSET.dp)
-                    .background(color = ColorEnum.LIGHT_BLUE.color)
-                    .zIndex(1f),
+                    .background(color = ColorEnum.LIGHT_BLUE.color),
+                    //.zIndex(1f),
                 measurementData = measurementData,
                 newMeasurementData = newMeasurementData,
             )

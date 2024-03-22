@@ -19,7 +19,11 @@ import androidx.compose.ui.unit.dp
 import enum.ColorEnum
 import kotlin.math.roundToInt
 
-val valuesLineChart = listOf(
+data class Point(val x: Float, val y: Float)
+
+data class PixelPont(val valueX: Float, val valueY: Float, val pixelX: Float, val pixelY: Float)
+
+val valuesLineChart = mutableListOf(
     Point(0f, 1f),
     Point(1.5f, 1.2f),
     Point(2f, 0.9f),
@@ -29,12 +33,6 @@ val valuesLineChart = listOf(
     Point(4f, 0.8f),
 )
 
-data class Point(val x: Float, val y: Float)
-
-data class PixelPont(val valueX: Float, val valueY: Float, val pixelX: Float, val pixelY: Float)
-
-var pixelPointsLineChart: List<PixelPont>? = null
-
 @Composable
 @Preview
 fun ChartMainField(
@@ -42,10 +40,21 @@ fun ChartMainField(
     zoomWidth: Float, zoomHeight: Float, xZoom: Float, yZoom: Float,
     measurementData: Map<Int, Pair<Double, Double>>
 ) {
-/*    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center,
-        ) {*/
+
+    var pixelPointsLineChart: MutableList<PixelPont>? = mutableListOf()
+
+    pixelPointsLineChart?.forEachIndexed { index, point ->
+        //draw points
+        Canvas(
+            modifier = Modifier,
+            onDraw = {
+                drawCircle(
+                    color = Color.Red,
+                    radius = 20f,
+                    center = Offset(point.pixelX, point.pixelY)
+                )
+            })
+    }
     Column(
         modifier = modifier
             .border(2.dp, Color.Green),
@@ -60,9 +69,9 @@ fun ChartMainField(
             Text(text = "Top")
             pixelPointsLineChart?.forEachIndexed { index, point ->
                 //draw points
-                drawPoint(point.pixelX, 10f)
+                Text(text = "${point.pixelX}")
+                drawPoint(point.pixelX, point.pixelY)
             }
-
         }
         Row(
             modifier = Modifier
@@ -85,7 +94,9 @@ fun ChartMainField(
                     .fillMaxHeight()
             ) {
                 Text(text = "Main chart")
-                drawLineChart()
+                if (pixelPointsLineChart != null) {
+                    drawLineChart(valuesLineChart = valuesLineChart, pixelPointsLineChart = pixelPointsLineChart )
+                }
             }
 
             Column(
@@ -119,7 +130,10 @@ fun Float.mapValueToDifferentRange(
 fun drawLineChart(
     modifier: Modifier = Modifier
         .fillMaxSize()
-        .border(width = 2.dp, color = Color.Red)
+        .border(width = 2.dp, color = Color.Red),
+    valuesLineChart: MutableList<Point>,
+    pixelPointsLineChart: MutableList<PixelPont>
+
 ) {
     // find max and min value of X, we will need that later
     val minXValue = valuesLineChart.minOf { it.x }
@@ -129,14 +143,12 @@ fun drawLineChart(
     val minYValue = valuesLineChart.minOf { it.y }
     val maxYValue = valuesLineChart.maxOf { it.y }
 
-    // create Box with canvas
     Box(modifier = modifier
         .drawBehind
         { // we use drawBehind() method to create canvas
 
             // map data points to pixel values, in canvas we think in pixels
-            pixelPointsLineChart = valuesLineChart.map {
-
+            valuesLineChart.map {
                 // we use extension function to convert and scale initial values to pixels
                 val pixelX = it.x.mapValueToDifferentRange(
                     inMin = minXValue,
@@ -153,26 +165,25 @@ fun drawLineChart(
                     outMax = 0f
                 )
 
-                PixelPont(valueX = it.x, valueY = it.y, pixelX = pixelX, pixelY = pixelY)
+                pixelPointsLineChart.add(PixelPont(valueX = it.x, valueY = it.y, pixelX = pixelX, pixelY = pixelY))
             }
-            /*
-
-             */
             val path = Path() // prepare path to draw
 
             // in the loop below we fill our path
             pixelPointsLineChart!!.forEachIndexed { index, point ->
                 if (index == 0) { // for the first point we just move drawing cursor to the position
                     path.moveTo(point.pixelX, point.pixelY)
+                    //drawPoint(point.pixelX, point.pixelY)
                 } else {
                     path.lineTo(point.pixelX, point.pixelY) // for rest of points we draw the line
                 }
                 //draw points
                 drawCircle(
                     color = Color.Blue,
-                    radius = 5f,
+                    radius = 10f,
                     center = Offset(point.pixelX, point.pixelY)
                 )
+                //drawPoint(point.pixelX, point.pixelY, Offset(x = point.pixelX, y = point.pixelY))
             }
             // and finally we draw the path
             drawPath(
@@ -181,16 +192,8 @@ fun drawLineChart(
                 style = Stroke(width = 3f)
             )
         })
-
-    pixelPointsLineChart?.forEach { pixelPont ->
-        run {
-            Text(
-                modifier = Modifier
-                    .offset(x = pixelPont.pixelX.dp, y = pixelPont.pixelY.dp), text = "T"
-            )
-        }
-    }
 }
+
 
 @Composable
 fun drawPoint(pixelX: Float, pixelY: Float) {
@@ -198,6 +201,9 @@ fun drawPoint(pixelX: Float, pixelY: Float) {
         modifier = Modifier
             .offset { IntOffset(pixelX.roundToInt(), pixelY.roundToInt()) }
     ) {
-
+        drawCircle(
+            color = Color.Red,
+            radius = 20f,
+        )
     }
 }
