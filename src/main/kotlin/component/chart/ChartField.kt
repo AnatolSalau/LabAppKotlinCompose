@@ -10,6 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Canvas
+import androidx.compose.ui.graphics.NativeCanvas
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.layout.boundsInRoot
@@ -46,6 +48,9 @@ fun ChartField(
             mutableStateOf(0F)
         }
 
+        var gapX by remember { mutableStateOf(0F) }
+        var gapY by remember { mutableStateOf(0F) }
+
         Box(Modifier
             .fillMaxSize()
             .onGloballyPositioned { coordinates ->
@@ -58,16 +63,20 @@ fun ChartField(
 
                     bottomRightX = rect.bottomRight.x
                     bottomRightY = rect.bottomRight.y
+
+                    gapX = width / valueMap.size
+                    gapY = height / valueMap.size
                 }
             }
             .drawBehind {
                 drawIntoCanvas {
-                    it.nativeCanvas.drawTextLine(TextLine.Companion.make(
+/*                    it.nativeCanvas.drawTextLine(TextLine.Companion.make(
                         "SOME TEXT : $topLeftY", Font(Typeface.makeDefault())),
                         width,
                         height,
                         Paint()
-                    )
+                    )*/
+                    drawTextLine(it.nativeCanvas,"SOME TEXT : $topLeftY", width, height)
                 }
             }
         )
@@ -97,4 +106,14 @@ fun ChartField(
         }
     }
 
+}
+
+
+fun drawTextLine(canvas: NativeCanvas, text: String, x: Float, y: Float) {
+    canvas.drawTextLine(TextLine.Companion.make(
+        "SOME TEXT : $text", Font(Typeface.makeDefault())),
+        x,
+        y,
+        Paint()
+    )
 }
