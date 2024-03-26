@@ -31,8 +31,6 @@ import kotlin.math.absoluteValue
 const val MIN_ZOOM_SIZE: Float = 20f
 const val CHART_LEFT_OFFSET = 200f
 
-
-
 @Composable
 @Preview
 fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.WHITE.color)) {
@@ -63,6 +61,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             19 to Pair(37.0, 38.0),
         )
     }
+
     val newMeasurementData: MutableMap<Int, Pair<Double, Double>> = remember {
         mutableStateMapOf(
             1 to Pair(1.0, 2.0),
@@ -255,7 +254,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             )
 
             /*
-                ac
+
              */
             ChartMainField(
                 modifier = Modifier
