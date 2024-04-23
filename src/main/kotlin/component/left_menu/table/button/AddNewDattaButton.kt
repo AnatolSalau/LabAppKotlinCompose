@@ -17,7 +17,7 @@ import kotlin.math.roundToInt
 @Composable
 @Preview
 fun AddNewDataButton(
-    leftAddDataIsActive: Boolean
+    leftAddDataIsActive : MutableState<Boolean>
 ) {
 
     var text by remember { mutableStateOf("Добавить данные") }
@@ -29,13 +29,14 @@ fun AddNewDataButton(
         else delay(1000L)
         enabled = true
         text = "Добавить данные"
-        leftAddDataIsActive = false
+        leftAddDataIsActive.value = false
     }
 
     Button(
         onClick = {
             enabled = false
             text = "Данные добавлены"
+            leftAddDataIsActive.value = true
                   },
         enabled = enabled
     ) {

@@ -103,7 +103,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
     var dragType by remember { mutableStateOf(DragTypeEnum.ON_DRAG_CANCEL) }
     val zoomColor by remember { mutableStateOf(ColorEnum.BLUE_GREEN) }
 
-    var leftAddDataIsActive by remember { mutableStateOf(false) }
+    var leftAddDataIsActive: MutableState<Boolean> = remember { mutableStateOf(false) }
 
     LaunchedEffect(interactionSource) {
         interactionSource.interactions.collect { interaction ->
@@ -260,11 +260,12 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                     .zIndex(1f),
                 measurementData = measurementData,
                 newMeasurementData = newMeasurementData,
+                leftAddDataIsActive =  leftAddDataIsActive
             )
-            if (leftAddDataIsActive) {
+            if (leftAddDataIsActive.value) {
                 LeftAddDataField(modifier = Modifier
                     .fillMaxHeight()
-                    .offset { IntOffset(CHART_LEFT_OFFSET.toInt() + 80, 0) }
+                    .offset { IntOffset(CHART_LEFT_OFFSET.toInt() + 100, 0) }
                     .background(color = ColorEnum.WHITE.color)
                     .zIndex(1f),
                     measurementData = measurementData,
