@@ -60,6 +60,9 @@ fun StatisticField(
                 }
             }
         }
+        /*
+            
+         */
         Column {
             Text("New measurement data")
             newMeasurementData.forEach { (key, value) ->
@@ -69,5 +72,4 @@ fun StatisticField(
             }
         }
     }
-
 }

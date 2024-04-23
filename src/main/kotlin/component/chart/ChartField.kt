@@ -80,7 +80,9 @@ fun ChartField(
                 }
             }
         )
+        /*
 
+         */
         Column (Modifier
             .fillMaxSize()
             .onGloballyPositioned { coordinates ->
@@ -107,7 +109,6 @@ fun ChartField(
     }
 
 }
-
 
 fun drawTextLine(canvas: NativeCanvas, text: String, x: Float, y: Float) {
     canvas.drawTextLine(TextLine.Companion.make(

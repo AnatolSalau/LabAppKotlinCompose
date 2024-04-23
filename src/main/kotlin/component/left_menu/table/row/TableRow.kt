@@ -42,4 +42,7 @@ fun TableRow(
         TableCell(id = id, measurementData = measurementData, newMeasurementData = newMeasurementData, isX = false)
         RowButton( id = id, measurementData = measurementData, newMeasurementData = newMeasurementData )
     }
+    /*
+        
+     */
 }
