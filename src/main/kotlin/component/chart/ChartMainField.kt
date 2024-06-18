@@ -56,7 +56,8 @@ fun ChartMainField(
                 modifier = Modifier
                     .weight(3f)
                     .border(2.dp, Color.Red)
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                measurementData = measurementData
             )
             Column(
                 modifier = Modifier

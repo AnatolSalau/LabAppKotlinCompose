@@ -230,7 +230,9 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                                 interactionSource.emit(DragInteraction.Stop(this))
                             }
                         }
-
+                        /*
+                            
+                         */
                     }
                 )
             }
@@ -272,7 +274,9 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                     newMeasurementData = newMeasurementData
                 )
             }
-
+            /*
+                
+             */
             ChartMainField(
                 modifier = Modifier
                     .fillMaxSize()

@@ -5,28 +5,26 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.NativeCanvas
+
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
-import org.jetbrains.skia.Font
-import org.jetbrains.skia.Paint
-import org.jetbrains.skia.TextLine
-import org.jetbrains.skia.Typeface
+import androidx.compose.ui.unit.dp
+import org.jetbrains.skia.*
 
 @Composable
 fun ChartField(
     valueMap:MutableMap<Int, Value>, modifier: Modifier,
-    density: Density = LocalDensity.current) {
+    density: Density = LocalDensity.current,
+    measurementData: Map<Int, Pair<Double, Double>>
+) {
     BoxWithConstraints (modifier = modifier){
         var width by remember {
             mutableStateOf(0F)
@@ -70,13 +68,14 @@ fun ChartField(
             }
             .drawBehind {
                 drawIntoCanvas {
-/*                    it.nativeCanvas.drawTextLine(TextLine.Companion.make(
-                        "SOME TEXT : $topLeftY", Font(Typeface.makeDefault())),
-                        width,
-                        height,
-                        Paint()
-                    )*/
-                    drawTextLine(it.nativeCanvas,"SOME TEXT : $topLeftY", width, height)
+                    drawLeftZeroCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", 0F, height)
+                    drawRightMaxCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width, 0F)
+                    drawMiddleCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width/2 + 300, height/2 + 300)
+
+                        drawLineThroughThreePoint(it.nativeCanvas,
+
+                        0F, 0F, width/2 + 300, height/2 + 300, width + 1F, 0F)
+
                 }
             }
         )
@@ -118,3 +117,38 @@ fun drawTextLine(canvas: NativeCanvas, text: String, x: Float, y: Float) {
         Paint()
     )
 }
+
+fun drawLeftZeroCircle(canvas: NativeCanvas, text: String, x: Float, y: Float) {
+
+    canvas.drawCircle(x,y, radius = 25f,  Paint().setARGB(255,220, 20, 60))
+}
+
+fun drawRightMaxCircle(canvas: NativeCanvas, text: String, x: Float, y: Float) {
+
+    canvas.drawCircle(x,y, radius = 25f,  Paint().setARGB(255,220, 20, 60))
+}
+
+fun drawMiddleCircle(canvas: NativeCanvas, text: String, x: Float, y: Float) {
+    canvas.drawTextLine(TextLine.Companion.make(
+        "Middle circle : $text", Font(Typeface.makeDefault())),
+        x,
+        y,
+        Paint()
+    )
+    canvas.drawCircle(x,y, radius = 25f,  Paint().setARGB(255,220, 20, 60))
+}
+
+fun drawLineThroughThreePoint(
+    canvas: NativeCanvas, x1: Float, y1: Float,
+    x2: Float, y2: Float,
+    x3: Float, y3: Float
+) {
+    var paint = Paint()
+    paint.apply {
+        isAntiAlias = true
+        color = Color.BLACK
+        strokeWidth = 10F }
+    canvas.drawLine(0F, 0F , 255F, 255F,  paint)
+}
+
+

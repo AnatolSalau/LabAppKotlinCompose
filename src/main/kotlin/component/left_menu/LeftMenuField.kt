@@ -12,7 +12,7 @@ import component.left_menu.LeftMenuTable
 import component.left_menu.table.button.AddNewDataButton
 import enum.ColorEnum
 /*
-   why did jim decided to give up
+
  */
 @Composable
 @Preview
@@ -30,4 +30,7 @@ fun LeftMenuField(
             newMeasurementData = newMeasurementData
         )
     }
+    /*
+       
+     */
 }

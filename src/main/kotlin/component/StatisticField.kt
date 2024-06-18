@@ -25,6 +25,9 @@ fun StatisticField(
     measurementData: MutableMap<Int, Pair<Double, Double>>,
     newMeasurementData: MutableMap<Int, Pair<Double, Double>>
 ) {
+    /*
+         what
+     */
     Row(modifier = modifier) {
         Column {
             Spacer(Modifier.height(10.dp))
@@ -61,7 +64,7 @@ fun StatisticField(
             }
         }
         /*
-            
+
          */
         Column {
             Text("New measurement data")
