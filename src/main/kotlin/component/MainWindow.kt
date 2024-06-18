@@ -238,10 +238,10 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             }
     ) {
 
-        /*
+
         StatisticField(
             modifier = Modifier
-                .offset { IntOffset(0, 1000) }.zIndex(1f),
+                .offset { IntOffset(1000, 1000) }.zIndex(1f),
             xTap = xTap, yTap = yTap,
             xDragStart = xDragStart, yDragStart = yDragStart,
             xDragEnd = xDragEnd, yDragEnd = yDragEnd,
@@ -252,7 +252,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             measurementData = measurementData,
             newMeasurementData = newMeasurementData
         )
-         */
+
         Box {
             LeftMenuField(
                 modifier = Modifier
@@ -288,6 +288,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                 zoomWidth = zoomWidth, zoomHeight = zoomHeight,
                 measurementData = measurementData
             )
+
 
             ZoomBorder(zoomWidth = zoomWidth, zoomHeight = zoomHeight, xZoom = xZoom, yZoom =
             yZoom)

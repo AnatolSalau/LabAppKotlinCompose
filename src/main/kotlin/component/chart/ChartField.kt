@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.zIndex
 import org.jetbrains.skia.*
 import kotlin.math.max
 import kotlin.math.min
@@ -100,7 +101,7 @@ fun ChartField(
                     //drawLeftZeroCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", 0F, height)
                     //drawRightMaxCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width, 0F)
                     //drawMiddleCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width/2 + 300, height/2 + 300)
-                    drawLineThroughThreePoint(it.nativeCanvas, 0F, 0F, width/2 + 300, height/2 + 300, width + 1F, 0F)
+                    //drawLine(it.nativeCanvas, 0F, 0F, width/2 + 300, height/2 + 300, width + 1F, 0F)
 
                     var measurementDataSortedFirstValue: Set<Map.Entry<Int, Pair<Double, Double>>> =
                         measurementData.toMap().entries.sortedBy { entry -> entry.value.first }.toSet()
@@ -142,7 +143,9 @@ fun ChartField(
                                 currWidth = currWidth + gapX
                             }
                         }
-                    //draw points
+                    //draw point
+                    var allCurrPointY: ArrayList<Float> = ArrayList()
+                    var allCurrPointX: ArrayList<Float> = ArrayList()
 
                     measurementData.entries.forEach { entry ->
                         run {
@@ -151,17 +154,34 @@ fun ChartField(
                             var i: Int = 0;
                             do {
                                 currPointY = currPointY - gapY
+                                allCurrPointY.add(currPointY)
                                 i++
                             } while (entry.value.first != allY[i-1])
                             var j: Int = 0;
                             do {
                                 currPointX = currPointX + gapX
+                                allCurrPointX.add(currPointX)
                                 j++
                             } while (entry.value.second != allX[j-1])
-                            println()
-                            drawPoint(it.nativeCanvas, "Y : ${entry.value.first}, X : ${entry.value.second}", currPointX, currPointY)
+
+                            drawPoint(it.nativeCanvas,
+                                "Y : ${entry.value.first}, X : ${entry.value.second}, currPointX = ${currPointX}, currPointY = ${currPointY}"
+                                , currPointX, currPointY)
                         }
                     }
+                    /*
+                    var z1 = 0
+                    var z2 = 1
+                    do {
+                        drawChartLine(
+                            it.nativeCanvas, allCurrPointX[z1], allCurrPointY[z1], allCurrPointX[z2], allCurrPointY[z2]
+                        )
+                        allCurrPointX.removeAt(z1)
+                        allCurrPointY.removeAt(z1)
+                        z1++
+                        z2++
+                    } while (z2 < allCurrPointX.size)
+                    */
                 }
             }
         )
@@ -212,12 +232,12 @@ fun drawTextLine(canvas: NativeCanvas, text: String, x: Float, y: Float) {
 
 fun drawPoint(canvas: NativeCanvas, text: String, x: Float, y: Float) {
     canvas.drawTextLine(TextLine.Companion.make(
-        "$text", Font(Typeface.makeDefault(), 30F)),
+        "$text", Font(Typeface.makeDefault(), 25F)),
         x,
         y,
         Paint()
     )
-    canvas.drawCircle(x,y, radius = 25f,  Paint().setARGB(255,220, 20, 60))
+    canvas.drawCircle(x,y, radius = 10f,  Paint().setARGB(255,220, 20, 60))
 }
 
 fun drawLeftZeroCircle(canvas: NativeCanvas, text: String, x: Float, y: Float) {
@@ -240,17 +260,16 @@ fun drawMiddleCircle(canvas: NativeCanvas, text: String, x: Float, y: Float) {
     canvas.drawCircle(x,y, radius = 25f,  Paint().setARGB(255,220, 20, 60))
 }
 
-fun drawLineThroughThreePoint(
+fun drawChartLine(
     canvas: NativeCanvas, x1: Float, y1: Float,
     x2: Float, y2: Float,
-    x3: Float, y3: Float
 ) {
     val paint = Paint()
     paint.apply {
         isAntiAlias = true
         color = Color.BLACK
-        strokeWidth = 10F }
-    canvas.drawLine(0F, 0F , 255F, 255F,  paint)
+        strokeWidth = 5F }
+    canvas.drawLine(x1, y1 , x2, y2,  paint)
 }
 
 
