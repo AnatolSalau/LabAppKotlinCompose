@@ -46,11 +46,39 @@ fun ChartField(
             mutableStateOf(0F)
         }
 
-        var keyXMin: Double by remember { mutableStateOf(0.0) }
-        var keyXMax: Double by remember { mutableStateOf(0.0) }
+        var minX: Double by remember {
+            mutableStateOf(0.0)
+        }
+
+        var minY: Double by remember {
+            mutableStateOf(0.0)
+        }
+
+        var maxX: Double by remember {
+            mutableStateOf(0.0)
+        }
+
+        var maxY: Double by remember {
+            mutableStateOf(0.0)
+        }
 
         var gapX by remember { mutableStateOf(0F) }
         var gapY by remember { mutableStateOf(0F) }
+
+        var measurementDataSortedFirstValue: Set<Map.Entry<Int, Pair<Double, Double>>> =
+            measurementData.toMap().entries.sortedBy { entry -> entry.value.first }.toSet()
+
+
+        var measurementDataSortedSecondValue: Set<Map.Entry<Int, Pair<Double, Double>>> =
+            measurementData.toMap().entries.sortedBy { entry -> entry.value.second }.toSet()
+
+        var allY: Set<Double> = measurementDataSortedFirstValue
+            .map { entry -> entry.value.first  }
+            .toSet()
+
+        var allX: Set<Double> = measurementDataSortedSecondValue
+            .map { entry -> entry.value.second  }
+            .toSet()
 
         Box(Modifier
             .fillMaxSize()
@@ -65,11 +93,20 @@ fun ChartField(
                     bottomRightX = rect.bottomRight.x
                     bottomRightY = rect.bottomRight.y
 
-                    gapX = width / valueMap.size
-                    gapY = height / valueMap.size
 
-                    valueMap.entries.sortedBy { entry -> entry.value.x }
+                    gapX = width / allX.size
+                    gapY = height / allY.size
 
+                    measurementData.entries.forEach { entry ->
+                        run {
+                            val currX = entry.value.first
+                            val currY = entry.value.second
+                            minX = min(minX, currX)
+                            minY = min(minY, currY)
+                            maxX = max(maxX, currX)
+                            maxY = max(maxY, currY)
+                        }
+                    }
                 }
             }
             .drawBehind {
@@ -77,11 +114,34 @@ fun ChartField(
                     drawLeftZeroCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", 0F, height)
                     drawRightMaxCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width, 0F)
                     drawMiddleCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width/2 + 300, height/2 + 300)
+                    drawLineThroughThreePoint(it.nativeCanvas, 0F, 0F, width/2 + 300, height/2 + 300, width + 1F, 0F)
 
-                        drawLineThroughThreePoint(it.nativeCanvas,
+                    // draw Y
+                    var currHeight = height
+                    allY
+                        .forEach { entry ->
+                        run {
+                            drawTextLine(it.nativeCanvas,"${entry}", 0F - 50, currHeight)
+                            currHeight = currHeight - gapY
+                        }
+                    }
 
-                        0F, 0F, width/2 + 300, height/2 + 300, width + 1F, 0F)
+                    // draw X
+                    var currWidth = 0F
 
+                    allX
+                        .forEach { entry ->
+                            run {
+                                drawTextLine(it.nativeCanvas,"${entry}", currWidth, height + 50)
+                                currWidth = currWidth + gapX
+                            }
+                        }
+                    //draw points
+                    measurementData.entries.forEach { entry ->
+                        run {
+                            drawPoint(it.nativeCanvas, "${entry.value.first} : ${entry.value.second}", 10F, 10F)
+                        }
+                    }
                 }
             }
         )
@@ -110,6 +170,12 @@ fun ChartField(
             Text(text = " topLeftX :  ${topLeftY} ")
             Text(text = " bottomRightX :  ${bottomRightX} ")
             Text(text = " bottomRightX :  ${bottomRightY} ")
+            Text(text = " minX :  ${minX} ")
+            Text(text = " minY :  ${minY} ")
+            Text(text = " maxX :  ${maxX} ")
+            Text(text = " maxY :  ${maxY} ")
+            Text(text = " gapX :  ${gapX} ")
+            Text(text = " gapY :  ${gapY} ")
         }
     }
 
@@ -117,11 +183,21 @@ fun ChartField(
 
 fun drawTextLine(canvas: NativeCanvas, text: String, x: Float, y: Float) {
     canvas.drawTextLine(TextLine.Companion.make(
-        "SOME TEXT : $text", Font(Typeface.makeDefault())),
+        text, Font(Typeface.makeDefault(), 30F)),
         x,
         y,
         Paint()
     )
+}
+
+fun drawPoint(canvas: NativeCanvas, text: String, x: Float, y: Float) {
+    canvas.drawTextLine(TextLine.Companion.make(
+        "$text", Font(Typeface.makeDefault(), 14F)),
+        x,
+        y,
+        Paint()
+    )
+    canvas.drawCircle(x,y, radius = 25f,  Paint().setARGB(255,220, 20, 60))
 }
 
 fun drawLeftZeroCircle(canvas: NativeCanvas, text: String, x: Float, y: Float) {
