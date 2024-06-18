@@ -143,14 +143,19 @@ fun ChartField(
                     measurementData.entries.forEach { entry ->
                         run {
                             var currPointX = 0F
-                            var currPointY = 0F
+                            var currPointY = height.toFloat()
                             var i: Int = 0;
                             do {
-                                currPointY = currPointY
+                                currPointY = currPointY - gapY
                                 i++
-                            } while (entry.value.first != allY[i])
+                            } while (entry.value.first != allY[i-1])
+                            var j: Int = 0;
+                            do {
+                                currPointX = currPointX + gapX
+                                j++
+                            } while (entry.value.first != allY[j-1])
 
-                            drawPoint(it.nativeCanvas, "${entry.value.first} : ${entry.value.second}", 10F, 10F)
+                            drawPoint(it.nativeCanvas, "Y : ${entry.value.first}, X : ${entry.value.second}", currPointX, currPointY)
                         }
                     }
                 }
@@ -203,7 +208,7 @@ fun drawTextLine(canvas: NativeCanvas, text: String, x: Float, y: Float) {
 
 fun drawPoint(canvas: NativeCanvas, text: String, x: Float, y: Float) {
     canvas.drawTextLine(TextLine.Companion.make(
-        "$text", Font(Typeface.makeDefault(), 14F)),
+        "$text", Font(Typeface.makeDefault(), 30F)),
         x,
         y,
         Paint()
