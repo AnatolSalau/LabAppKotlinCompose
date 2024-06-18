@@ -65,22 +65,7 @@ fun ChartField(
         var gapX by remember { mutableStateOf(0F) }
         var gapY by remember { mutableStateOf(0F) }
 
-        var measurementDataSortedFirstValue: Set<Map.Entry<Int, Pair<Double, Double>>> =
-            measurementData.toMap().entries.sortedBy { entry -> entry.value.first }.toSet()
 
-
-        var measurementDataSortedSecondValue: Set<Map.Entry<Int, Pair<Double, Double>>> =
-            measurementData.toMap().entries.sortedBy { entry -> entry.value.second }.toSet()
-
-        var allY: List<Double> = measurementDataSortedFirstValue
-            .map { entry -> entry.value.first  }
-            .toSet()
-            .toList()
-
-        var allX: List<Double> = measurementDataSortedSecondValue
-            .map { entry -> entry.value.second  }
-            .toSet()
-            .toList()
 
         Box(Modifier
             .fillMaxSize()
@@ -96,8 +81,7 @@ fun ChartField(
                     bottomRightY = rect.bottomRight.y
 
 
-                    gapX = width / allX.size
-                    gapY = height / allY.size
+
 
                     measurementData.entries.forEach { entry ->
                         run {
@@ -113,13 +97,33 @@ fun ChartField(
             }
             .drawBehind {
                 drawIntoCanvas {
-                    drawLeftZeroCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", 0F, height)
-                    drawRightMaxCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width, 0F)
-                    drawMiddleCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width/2 + 300, height/2 + 300)
+                    //drawLeftZeroCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", 0F, height)
+                    //drawRightMaxCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width, 0F)
+                    //drawMiddleCircle(it.nativeCanvas,"SOME TEXT : $topLeftY", width/2 + 300, height/2 + 300)
                     drawLineThroughThreePoint(it.nativeCanvas, 0F, 0F, width/2 + 300, height/2 + 300, width + 1F, 0F)
 
+                    var measurementDataSortedFirstValue: Set<Map.Entry<Int, Pair<Double, Double>>> =
+                        measurementData.toMap().entries.sortedBy { entry -> entry.value.first }.toSet()
+
+
+                    var measurementDataSortedSecondValue: Set<Map.Entry<Int, Pair<Double, Double>>> =
+                        measurementData.toMap().entries.sortedBy { entry -> entry.value.second }.toSet()
+
+                    var allY: List<Double> = measurementDataSortedFirstValue
+                        .map { entry -> entry.value.first  }
+                        .toSet()
+                        .toList()
+
+                    var allX: List<Double> = measurementDataSortedSecondValue
+                        .map { entry -> entry.value.second  }
+                        .toSet()
+                        .toList()
+
+                    gapX = width / allX.size
+                    gapY = height / allY.size
+
                     // draw Y
-                    var currHeight = height
+                    var currHeight = height - gapY
                     allY
                         .forEach { entry ->
                         run {
@@ -129,7 +133,7 @@ fun ChartField(
                     }
 
                     // draw X
-                    var currWidth = 0F
+                    var currWidth = 0F + gapX
 
                     allX
                         .forEach { entry ->
@@ -153,8 +157,8 @@ fun ChartField(
                             do {
                                 currPointX = currPointX + gapX
                                 j++
-                            } while (entry.value.first != allY[j-1])
-
+                            } while (entry.value.second != allX[j-1])
+                            println()
                             drawPoint(it.nativeCanvas, "Y : ${entry.value.first}, X : ${entry.value.second}", currPointX, currPointY)
                         }
                     }

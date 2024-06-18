@@ -237,6 +237,8 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                 )
             }
     ) {
+
+        /*
         StatisticField(
             modifier = Modifier
                 .offset { IntOffset(0, 1000) }.zIndex(1f),
@@ -250,8 +252,6 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             measurementData = measurementData,
             newMeasurementData = newMeasurementData
         )
-        /*
-
          */
         Box {
             LeftMenuField(
