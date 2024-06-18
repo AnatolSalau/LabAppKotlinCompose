@@ -72,13 +72,15 @@ fun ChartField(
         var measurementDataSortedSecondValue: Set<Map.Entry<Int, Pair<Double, Double>>> =
             measurementData.toMap().entries.sortedBy { entry -> entry.value.second }.toSet()
 
-        var allY: Set<Double> = measurementDataSortedFirstValue
+        var allY: List<Double> = measurementDataSortedFirstValue
             .map { entry -> entry.value.first  }
             .toSet()
+            .toList()
 
-        var allX: Set<Double> = measurementDataSortedSecondValue
+        var allX: List<Double> = measurementDataSortedSecondValue
             .map { entry -> entry.value.second  }
             .toSet()
+            .toList()
 
         Box(Modifier
             .fillMaxSize()
@@ -137,8 +139,17 @@ fun ChartField(
                             }
                         }
                     //draw points
+
                     measurementData.entries.forEach { entry ->
                         run {
+                            var currPointX = 0F
+                            var currPointY = 0F
+                            var i: Int = 0;
+                            do {
+                                currPointY = currPointY
+                                i++
+                            } while (entry.value.first != allY[i])
+
                             drawPoint(it.nativeCanvas, "${entry.value.first} : ${entry.value.second}", 10F, 10F)
                         }
                     }
