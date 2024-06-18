@@ -9,15 +9,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.NativeCanvas
-
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.dp
 import org.jetbrains.skia.*
+import kotlin.math.max
+import kotlin.math.min
 
 @Composable
 fun ChartField(
@@ -46,6 +46,9 @@ fun ChartField(
             mutableStateOf(0F)
         }
 
+        var keyXMin: Double by remember { mutableStateOf(0.0) }
+        var keyXMax: Double by remember { mutableStateOf(0.0) }
+
         var gapX by remember { mutableStateOf(0F) }
         var gapY by remember { mutableStateOf(0F) }
 
@@ -64,6 +67,9 @@ fun ChartField(
 
                     gapX = width / valueMap.size
                     gapY = height / valueMap.size
+
+                    valueMap.entries.sortedBy { entry -> entry.value.x }
+
                 }
             }
             .drawBehind {
@@ -143,7 +149,7 @@ fun drawLineThroughThreePoint(
     x2: Float, y2: Float,
     x3: Float, y3: Float
 ) {
-    var paint = Paint()
+    val paint = Paint()
     paint.apply {
         isAntiAlias = true
         color = Color.BLACK
