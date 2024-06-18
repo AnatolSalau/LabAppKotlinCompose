@@ -17,7 +17,9 @@ import kotlin.math.roundToInt
 @Composable
 @Preview
 fun AddNewDataButton(
-    leftAddDataIsActive : MutableState<Boolean>
+    leftAddDataIsActive : MutableState<Boolean>,
+    measurementData: MutableMap<Int, Pair<Double, Double>>,
+    newMeasurementData: MutableMap<Int, Pair<Double, Double>>
 ) {
 
     var text by remember { mutableStateOf("Добавить данные") }
@@ -37,7 +39,9 @@ fun AddNewDataButton(
             enabled = false
             text = "Данные добавлены"
             leftAddDataIsActive.value = true
-                  },
+            val lastKey = measurementData.keys.last()
+            measurementData[lastKey +1] = Pair(0.0, 0.0)
+        },
         enabled = enabled
     ) {
         Text(text = text)

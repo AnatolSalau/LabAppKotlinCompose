@@ -9,7 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import component.left_menu.table.row.RowButton
+import component.left_menu.table.row.RowButtonAdd
+import component.left_menu.table.row.RowButtonDelete
 import component.left_menu.table.row.TableCell
 /*
 
@@ -40,7 +41,8 @@ fun TableRow(
         )
         TableCell(id = id, measurementData = measurementData, newMeasurementData = newMeasurementData, isX = true)
         TableCell(id = id, measurementData = measurementData, newMeasurementData = newMeasurementData, isX = false)
-        RowButton( id = id, measurementData = measurementData, newMeasurementData = newMeasurementData )
+        RowButtonAdd( id = id, measurementData = measurementData, newMeasurementData = newMeasurementData )
+        RowButtonDelete( id = id, measurementData = measurementData, newMeasurementData = newMeasurementData )
     }
     /*
         

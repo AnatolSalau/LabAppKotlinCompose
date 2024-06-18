@@ -24,7 +24,8 @@ fun LeftMenuField(
 ) {
     Column(modifier = modifier) {
         Text(text = "LeftMenuField")
-        AddNewDataButton(leftAddDataIsActive = leftAddDataIsActive)
+        AddNewDataButton(leftAddDataIsActive = leftAddDataIsActive,
+            measurementData = measurementData, newMeasurementData = newMeasurementData)
         LeftMenuTable(
             measurementData = measurementData,
             newMeasurementData = newMeasurementData
