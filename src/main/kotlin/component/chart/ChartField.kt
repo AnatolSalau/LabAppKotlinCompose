@@ -21,8 +21,8 @@ import org.jetbrains.skia.*
 import kotlin.math.max
 import kotlin.math.min
 
-var allCurrPointY: ArrayList<Float> = ArrayList()
-var allCurrPointX: ArrayList<Float> = ArrayList()
+//var allCurrPointY: ArrayList<Float> = ArrayList()
+//var allCurrPointX: ArrayList<Float> = ArrayList()
 
 @Composable
 fun ChartField(
@@ -30,7 +30,25 @@ fun ChartField(
     density: Density = LocalDensity.current,
     measurementData: Map<Int, Pair<Double, Double>>
 ) {
+
     BoxWithConstraints (modifier = modifier){
+        var allCurrPointY = remember { mutableStateListOf(0.0F, 0.0F) }
+        var allCurrPointX = remember { mutableStateListOf(0.0F, 0.0F) }
+
+        var x1 by remember {
+            mutableStateOf(0F)
+        }
+        var x2 by remember {
+            mutableStateOf(0F)
+        }
+
+        var y1 by remember {
+            mutableStateOf(0F)
+        }
+        var y2 by remember {
+            mutableStateOf(0F)
+        }
+
         var width by remember {
             mutableStateOf(0F)
         }
@@ -169,23 +187,17 @@ fun ChartField(
                             } while (entry.value.second != allX[j-1])
 
                             drawPoint(it.nativeCanvas,
-                                "Y : ${entry.value.first}, X : ${entry.value.second}, currPointX = ${currPointX}, currPointY = ${currPointY}"
+                                "   ${entry.value.first} : ${entry.value.second}"
                                 , currPointX, currPointY)
 
                         }
                     }
-
                 }
             }
         )
 
+            //DrawPath(x1 = allCurrPointX[0], x2 = allCurrPointX[allCurrPointX.size - 1], y1 = allCurrPointY[0], y2 = allCurrPointY[allCurrPointY.size - 1])
         /*
-            Draw path
-         */
-        if (allCurrPointX.size > 0) {
-            DrawPath(x1 = allCurrPointX[0], x2 = allCurrPointX[allCurrPointX.size - 1], y1 = allCurrPointY[0], y2 = allCurrPointY[allCurrPointY.size - 1])
-        }
-
         Column (Modifier
             .fillMaxSize()
             .onGloballyPositioned { coordinates ->
@@ -215,13 +227,15 @@ fun ChartField(
             Text(text = " gapX :  ${gapX} ")
             Text(text = " gapY :  ${gapY} ")
         }
+        */
+
     }
 
 }
 
 fun drawTextLine(canvas: NativeCanvas, text: String, x: Float, y: Float) {
     canvas.drawTextLine(TextLine.Companion.make(
-        text, Font(Typeface.makeDefault(), 30F)),
+        text, Font(Typeface.makeDefault(), 20F)),
         x,
         y,
         Paint()
@@ -230,12 +244,12 @@ fun drawTextLine(canvas: NativeCanvas, text: String, x: Float, y: Float) {
 
 fun drawPoint(canvas: NativeCanvas, text: String, x: Float, y: Float) {
     canvas.drawTextLine(TextLine.Companion.make(
-        "$text", Font(Typeface.makeDefault(), 25F)),
+        "$text", Font(Typeface.makeDefault(), 20F)),
         x,
         y,
         Paint()
     )
-    canvas.drawCircle(x,y, radius = 10f,  Paint().setARGB(255,220, 20, 60))
+    canvas.drawCircle(x,y, radius = 5f,  Paint().setARGB(255,220, 20, 60))
 }
 
 fun drawLeftZeroCircle(canvas: NativeCanvas, text: String, x: Float, y: Float) {

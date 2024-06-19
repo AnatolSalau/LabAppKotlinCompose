@@ -251,7 +251,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             }
     ) {
 
-
+        /*
         StatisticField(
             modifier = Modifier
                 .offset { IntOffset(1000, 1000) }.zIndex(1f),
@@ -265,13 +265,13 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             measurementData = measurementData,
             newMeasurementData = chartValues
         )
-
+        */
         Box {
             LeftMenuField(
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(CHART_LEFT_OFFSET.dp)
-                    .background(color = ColorEnum.LIGHT_BLUE.color)
+                    .background(color = ColorEnum.GRAY.color)
                     .zIndex(1f),
                 measurementData = measurementData,
                 newMeasurementData = newMeasurementData,
@@ -294,7 +294,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                 modifier = Modifier
                     .fillMaxSize()
                     .background(ColorEnum.PASTEL_BLUE.color)
-                    .border(width = 2.dp, color = Color.Transparent)
+                    //.border(width = 2.dp, color = Color.Transparent)
                     .padding(start = CHART_LEFT_OFFSET.dp),
 
                 xZoom = xZoom, yZoom = yZoom,

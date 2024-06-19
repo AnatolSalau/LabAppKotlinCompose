@@ -17,13 +17,12 @@ import enum.ColorEnum
 @Composable
 @Preview
 fun LeftMenuField(
-    modifier: Modifier = Modifier.background(ColorEnum.LIGHT_BLUE.color).fillMaxHeight(),
+    modifier: Modifier = Modifier.background(ColorEnum.GRAY.color).fillMaxHeight(),
     measurementData:MutableMap<Int, Pair<Double, Double>>,
     newMeasurementData:MutableMap<Int, Pair<Double, Double>>,
     leftAddDataIsActive : MutableState<Boolean>
 ) {
     Column(modifier = modifier) {
-        Text(text = "LeftMenuField")
         AddNewDataButton(leftAddDataIsActive = leftAddDataIsActive,
             measurementData = measurementData, newMeasurementData = newMeasurementData)
         LeftMenuTable(

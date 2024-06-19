@@ -25,7 +25,7 @@ fun LeftDrawChartMenu(
             },
             enabled = true
         ) {
-            Text(text = "Добавить линию")
+            Text(text = "Построить линии тренда")
         }
         DrawChartTable(chartValues = chartValues, chartValuesNew = chartValuesNew)
     }

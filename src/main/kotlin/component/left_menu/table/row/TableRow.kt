@@ -28,7 +28,7 @@ fun TableRow(
         modifier = Modifier
             .padding(start = 2.dp)
             .height(30.dp)
-            .border(width = 1.dp, color = Color.Black)
+            //.border(width = 1.dp, color = Color.Black)
     ) {
 
         Text(modifier = Modifier

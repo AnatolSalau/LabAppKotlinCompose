@@ -13,22 +13,14 @@ fun AddNewDataButton(
     newMeasurementData: MutableMap<Int, Pair<Double, Double>>
 ) {
 
-    var text by remember { mutableStateOf("Добавить данные") }
+    var text by remember { mutableStateOf("Добавить данные вручную") }
 
     var enabledAddData by remember { mutableStateOf(true) }
 
     var enabledAddLine by remember { mutableStateOf(true) }
 
     var enabledCloseLine by remember { mutableStateOf(true) }
-    /*
-    LaunchedEffect(enabled) {
-        if (enabled) return@LaunchedEffect
-        else delay(1000L)
-        enabled = true
-        text = "Добавить данные"
-        leftAddDataIsActive.value = false
-    }
-    */
+
     Button(
         onClick = {
             enabledAddData = true
@@ -41,6 +33,14 @@ fun AddNewDataButton(
     ) {
         Text(text = text)
     }
+    Text(text = " ")
+    Button(
+        onClick = {
+        },
+        enabled = true
+    ) {
+        Text(text = "Установить соединение")
+    }
 
     Button(
         onClick = {
@@ -50,7 +50,7 @@ fun AddNewDataButton(
         },
         enabled = enabledAddLine
     ) {
-        Text(text = "Добавить линию")
+        Text(text = "Меню открыть")
     }
 
     Button(
@@ -61,7 +61,7 @@ fun AddNewDataButton(
         },
         enabled = enabledCloseLine
     ) {
-        Text(text ="Закрыть меню")
+        Text(text ="Меню закрыть")
     }
 
 }

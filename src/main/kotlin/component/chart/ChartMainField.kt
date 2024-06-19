@@ -28,52 +28,52 @@ fun ChartMainField(
     }
     Column(
         modifier = modifier
-            .border(2.dp, Color.Green),
+            //.border(2.dp, Color.Green),
     ) {
         Row(
             modifier = Modifier.height(50.dp)
-                .border(1.dp, Color.Blue)
+                //.border(1.dp, Color.Blue)
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Text(text = "Top")
+            //Text(text = "Top")
         }
         Row(
             modifier = Modifier
-                .border(2.dp, Color.Red)
+                //.border(2.dp, Color.Red)
                 .fillMaxWidth()
                 .weight(1f)
         ) {
             Column(
                 modifier = Modifier
                     .width(50.dp)
-                    .border(2.dp, Color.Yellow)
+                    //.border(2.dp, Color.Yellow)
                     .fillMaxHeight()
             ) {
-                Text(text = "Left")
+                //Text(text = "Left")
             }
             ChartField(
                 chartValues = chartValues,
                 modifier = Modifier
                     .weight(3f)
-                    .border(2.dp, Color.Red)
+                    //.border(2.dp, Color.Red)
                     .fillMaxSize(),
                 measurementData = measurementData,
             )
             Column(
                 modifier = Modifier
                     .width(50.dp)
-                    .border(2.dp, Color.Yellow)
+                    //.border(2.dp, Color.Yellow)
                     .fillMaxHeight()
             ) {
-                Text(text = "Right")
+                //Text(text = "Right")
             }
         }
         Row(
             modifier = Modifier
-                .border(1.dp, Color.Blue)
+                //.border(1.dp, Color.Blue)
                 .fillMaxWidth()
                 .height(50.dp)
-        ) { Text(text = "Bottom") }
+        ) { /*Text(text = "Bottom")*/ }
     }
 }
