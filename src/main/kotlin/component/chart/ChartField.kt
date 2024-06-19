@@ -165,9 +165,6 @@ fun ChartField(
                                 currWidth = currWidth + gapX
                             }
                         }
-                    //draw point
-                    //var allCurrPointY: ArrayList<Float> = ArrayList()
-                    //var allCurrPointX: ArrayList<Float> = ArrayList()
 
                     measurementData.entries.forEach { entry ->
                         run {
@@ -192,6 +189,29 @@ fun ChartField(
 
                         }
                     }
+                    println()
+                    x1 = allCurrPointX
+                        .toSet()
+                        .filter { entry -> entry != 0.0f }
+                        .minOf { it }
+
+                    y1 = allCurrPointY
+                        .toSet()
+                        .filter { entry -> entry != 0.0f }
+                        .minOf { it }
+
+                    x2 = allCurrPointX
+                        .toSet()
+                        .filter { entry -> entry != 0.0f }
+                        .maxOf { it }
+
+                    y2 = allCurrPointY
+                        .toSet()
+                        .filter { entry -> entry != 0.0f }
+                        .maxOf { it }
+                    println()
+                    drawChartLine(it.nativeCanvas, x1, y1, x2, y2)
+
                 }
             }
         )
@@ -281,6 +301,8 @@ fun drawChartLine(
         isAntiAlias = true
         color = Color.BLACK
         strokeWidth = 5F }
+    canvas.drawCircle(x1,y1, radius = 10f,  Paint().setARGB(255,60, 179, 113))
+    canvas.drawCircle(x2,y2, radius = 10f,  Paint().setARGB(255,0, 0, 255))
     canvas.drawLine(x1, y1 , x2, y2,  paint)
 }
 

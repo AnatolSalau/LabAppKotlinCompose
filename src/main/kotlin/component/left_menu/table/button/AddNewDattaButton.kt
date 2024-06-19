@@ -13,7 +13,7 @@ fun AddNewDataButton(
     newMeasurementData: MutableMap<Int, Pair<Double, Double>>
 ) {
 
-    var text by remember { mutableStateOf("Добавить данные вручную") }
+    var text by remember { mutableStateOf("Добавить данные") }
 
     var enabledAddData by remember { mutableStateOf(true) }
 
@@ -24,7 +24,7 @@ fun AddNewDataButton(
     Button(
         onClick = {
             enabledAddData = true
-            text = "Данные добавлены"
+            text = "Добавить данные"
             //leftAddDataIsActive.value = true
             val lastKey = measurementData.keys.last()
             measurementData[lastKey +1] = Pair(0.0, 0.0)
@@ -63,5 +63,4 @@ fun AddNewDataButton(
     ) {
         Text(text ="Меню закрыть")
     }
-
 }
