@@ -10,14 +10,14 @@ import component.left_menu.table.TableRow
 
 @Composable
 @Preview
-fun LeftMenuTable(
+fun DrawChartTable(
     modifier: Modifier = Modifier.fillMaxWidth(),
-    measurementData: MutableMap<Int, Pair<Double, Double>>,
-    newMeasurementData: MutableMap<Int, Pair<Double, Double>>
+    chartValues: MutableMap<Int, Pair<Double, Double>>,
+    chartValuesNew: MutableMap<Int, Pair<Double, Double>>
 ) {
     Column(modifier = modifier) {
-        measurementData.forEach { (key, value) ->
-            TableRow( id = key, measurementData = measurementData, newMeasurementData = newMeasurementData)
+        chartValues.forEach { (key, value) ->
+            TableRow( id = key, measurementData = chartValues, newMeasurementData = chartValuesNew)
         }
     }
 }

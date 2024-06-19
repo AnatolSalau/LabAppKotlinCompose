@@ -18,7 +18,8 @@ import enum.ColorEnum
 fun ChartMainField(
     modifier: Modifier = Modifier.background(ColorEnum.WHITE.color),
     zoomWidth: Float, zoomHeight: Float, xZoom: Float, yZoom: Float,
-    measurementData: Map<Int, Pair<Double, Double>>
+    measurementData: Map<Int, Pair<Double, Double>>,
+    chartValues: MutableMap<Int, Pair<Double, Double>>
 ) {
     var valueMap: MutableMap<Int, Value> = mutableMapOf()
 
@@ -52,12 +53,12 @@ fun ChartMainField(
                 Text(text = "Left")
             }
             ChartField(
-                valueMap = valueMap,
+                chartValues = chartValues,
                 modifier = Modifier
                     .weight(3f)
                     .border(2.dp, Color.Red)
                     .fillMaxSize(),
-                measurementData = measurementData
+                measurementData = measurementData,
             )
             Column(
                 modifier = Modifier

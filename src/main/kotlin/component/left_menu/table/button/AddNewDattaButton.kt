@@ -1,18 +1,9 @@
 package component.left_menu.table.button
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.offset
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.IntOffset
-import enum.DragTypeEnum
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.math.absoluteValue
-import kotlin.math.roundToInt
 
 @Composable
 @Preview
@@ -24,8 +15,12 @@ fun AddNewDataButton(
 
     var text by remember { mutableStateOf("Добавить данные") }
 
-    var enabled by remember { mutableStateOf(true) }
+    var enabledAddData by remember { mutableStateOf(true) }
 
+    var enabledAddLine by remember { mutableStateOf(true) }
+
+    var enabledCloseLine by remember { mutableStateOf(true) }
+    /*
     LaunchedEffect(enabled) {
         if (enabled) return@LaunchedEffect
         else delay(1000L)
@@ -33,18 +28,40 @@ fun AddNewDataButton(
         text = "Добавить данные"
         leftAddDataIsActive.value = false
     }
-
+    */
     Button(
         onClick = {
-            enabled = false
+            enabledAddData = true
             text = "Данные добавлены"
-            leftAddDataIsActive.value = true
+            //leftAddDataIsActive.value = true
             val lastKey = measurementData.keys.last()
             measurementData[lastKey +1] = Pair(0.0, 0.0)
         },
-        enabled = enabled
+        enabled = enabledAddData
     ) {
         Text(text = text)
+    }
+
+    Button(
+        onClick = {
+            enabledAddLine = false
+            leftAddDataIsActive.value = true
+            enabledCloseLine = true
+        },
+        enabled = enabledAddLine
+    ) {
+        Text(text = "Добавить линию")
+    }
+
+    Button(
+        onClick = {
+            enabledCloseLine = false
+            enabledAddLine = true
+            leftAddDataIsActive.value = false
+        },
+        enabled = enabledCloseLine
+    ) {
+        Text(text ="Закрыть меню")
     }
 
 }

@@ -12,14 +12,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import component.left_add_data.LeftAddDataField
+import component.draw_chart.DrawPath
+import component.left_draw_chart_menu.LeftDrawChartMenu
 import component.zoom.ZoomBorder
 import component.zoom.Point
 import component.zoom.ZoomButton
@@ -87,6 +87,22 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             17 to Pair(33.0, 34.0),
             18 to Pair(35.0, 36.0),
             19 to Pair(37.0, 38.0),
+        )
+    }
+
+    val chartValues: MutableMap<Int, Pair<Double, Double>> = remember {
+        mutableStateMapOf(
+            1 to Pair(1.0, 2.0),
+            2 to Pair(3.0, 4.0),
+            3 to Pair(5.0, 6.0),
+        )
+    }
+
+    val chartValuesNew: MutableMap<Int, Pair<Double, Double>> = remember {
+        mutableStateMapOf(
+            1 to Pair(1.0, 2.0),
+            2 to Pair(3.0, 4.0),
+            3 to Pair(5.0, 6.0),
         )
     }
     var xTap by remember { mutableStateOf(0f) }
@@ -230,9 +246,6 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                                 interactionSource.emit(DragInteraction.Stop(this))
                             }
                         }
-                        /*
-                            
-                         */
                     }
                 )
             }
@@ -250,7 +263,7 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
             zoomWidth = zoomWidth, zoomHeight = zoomHeight,
             zoomColor = zoomColor,
             measurementData = measurementData,
-            newMeasurementData = newMeasurementData
+            newMeasurementData = chartValues
         )
 
         Box {
@@ -265,13 +278,13 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
                 leftAddDataIsActive =  leftAddDataIsActive
             )
             if (leftAddDataIsActive.value) {
-                LeftAddDataField(modifier = Modifier
+                LeftDrawChartMenu(modifier = Modifier
                     .fillMaxHeight()
                     .offset { IntOffset(CHART_LEFT_OFFSET.toInt() + 100, 0) }
                     .background(color = ColorEnum.WHITE.color)
                     .zIndex(1f),
-                    measurementData = measurementData,
-                    newMeasurementData = newMeasurementData
+                    chartValues = chartValues,
+                    chartValuesNew = chartValuesNew
                 )
             }
             /*
@@ -286,12 +299,15 @@ fun MainWindow(modifier: Modifier = Modifier.fillMaxSize().background(ColorEnum.
 
                 xZoom = xZoom, yZoom = yZoom,
                 zoomWidth = zoomWidth, zoomHeight = zoomHeight,
-                measurementData = measurementData
+                measurementData = measurementData,
+                chartValues = chartValues
             )
 
 
             ZoomBorder(zoomWidth = zoomWidth, zoomHeight = zoomHeight, xZoom = xZoom, yZoom =
             yZoom)
+
+            //DrawPath(x1 = 0f, x2 = 500f, y1 = 0f, y2 = 500f)
 
             Point(x = xTap, y = yTap, color = ColorEnum.RED) // tap point
             Point(x = xDragStart, y = yDragStart, color = ColorEnum.RED) // drag start point

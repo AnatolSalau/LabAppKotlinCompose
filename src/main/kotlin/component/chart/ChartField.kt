@@ -16,13 +16,17 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.zIndex
+import component.draw_chart.DrawPath
 import org.jetbrains.skia.*
 import kotlin.math.max
 import kotlin.math.min
 
+var allCurrPointY: ArrayList<Float> = ArrayList()
+var allCurrPointX: ArrayList<Float> = ArrayList()
+
 @Composable
 fun ChartField(
-    valueMap:MutableMap<Int, Value>, modifier: Modifier,
+    chartValues: MutableMap<Int, Pair<Double, Double>>, modifier: Modifier,
     density: Density = LocalDensity.current,
     measurementData: Map<Int, Pair<Double, Double>>
 ) {
@@ -65,7 +69,6 @@ fun ChartField(
 
         var gapX by remember { mutableStateOf(0F) }
         var gapY by remember { mutableStateOf(0F) }
-
 
 
         Box(Modifier
@@ -123,6 +126,7 @@ fun ChartField(
                     gapX = width / allX.size
                     gapY = height / allY.size
 
+
                     // draw Y
                     var currHeight = height - gapY
                     allY
@@ -144,8 +148,8 @@ fun ChartField(
                             }
                         }
                     //draw point
-                    var allCurrPointY: ArrayList<Float> = ArrayList()
-                    var allCurrPointX: ArrayList<Float> = ArrayList()
+                    //var allCurrPointY: ArrayList<Float> = ArrayList()
+                    //var allCurrPointX: ArrayList<Float> = ArrayList()
 
                     measurementData.entries.forEach { entry ->
                         run {
@@ -167,27 +171,21 @@ fun ChartField(
                             drawPoint(it.nativeCanvas,
                                 "Y : ${entry.value.first}, X : ${entry.value.second}, currPointX = ${currPointX}, currPointY = ${currPointY}"
                                 , currPointX, currPointY)
+
                         }
                     }
-                    /*
-                    var z1 = 0
-                    var z2 = 1
-                    do {
-                        drawChartLine(
-                            it.nativeCanvas, allCurrPointX[z1], allCurrPointY[z1], allCurrPointX[z2], allCurrPointY[z2]
-                        )
-                        allCurrPointX.removeAt(z1)
-                        allCurrPointY.removeAt(z1)
-                        z1++
-                        z2++
-                    } while (z2 < allCurrPointX.size)
-                    */
+
                 }
             }
         )
-        /*
 
+        /*
+            Draw path
          */
+        if (allCurrPointX.size > 0) {
+            DrawPath(x1 = allCurrPointX[0], x2 = allCurrPointX[allCurrPointX.size - 1], y1 = allCurrPointY[0], y2 = allCurrPointY[allCurrPointY.size - 1])
+        }
+
         Column (Modifier
             .fillMaxSize()
             .onGloballyPositioned { coordinates ->
